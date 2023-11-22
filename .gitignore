@@ -1,0 +1,11 @@
+# Ignore archives
+*.zip
+*.tar
+*.tar.gz
+*.rar
+
+# Ignore dataset folder and subfolders
+datasets/
+
+# Ignore virtual environment
+venv/
