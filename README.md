@@ -33,4 +33,4 @@ unzip fer2013.zip
 
 Contributors names and contact info
 * Bao Nguyen (btn6364@rit.edu) 
-* Neha Kulkarni  
+* Neha Kulkarni (nk4349@rit.edu)
