@@ -16,7 +16,7 @@ class EarlyStopping:
         self.count = 0 # the number of epochs waiting. 
     
     def __call__(self, val_loss):
-        # Update the validation loss if the condition doesn't hold.
+        # The first iteration, the best validation loss is None, update it. 
         if self.best_loss is None:
             self.best_loss = val_loss
         
