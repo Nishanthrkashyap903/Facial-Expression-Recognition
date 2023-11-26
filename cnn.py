@@ -22,7 +22,7 @@ class EmotionVGG(nn.Module):
         # Create the fully-connected layers 
         # Flatten -> 128 x 128 x 7 Linear layers. 
         self.fully_connected_layers = nn.Sequential(
-            nn.Linear(512 * 1 * 1, 128), # TODO: Can we replace 128 with another number? What's the difference?
+            nn.Linear(512 * 1 * 1, 128), # TODO: Try different values and see what work, make sure it is >= num_classes. 
             nn.ReLU(), 
             nn.Dropout(p=0.5), # This layer is not in the orginal paper. 
             nn.Linear(128, 128), 
