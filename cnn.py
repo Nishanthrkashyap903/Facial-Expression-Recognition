@@ -8,7 +8,7 @@ class EmotionVGG(nn.Module):
         'VGG19': [64, 64, 'M', 128, 128, 'M', 256, 256, 256, 256, 'M', 512, 512, 512, 512, 'M', 512, 512, 512, 512, 'M'],
     }
 
-    def __init__(self, in_channels = 1, num_classes = 7, model_name = "VGG11"):
+    def __init__(self, in_channels = 1, num_classes = 7, model_name = "VGG13"):
         super(EmotionVGG, self).__init__()
         if model_name not in self.model_names: 
             raise ValueError(f"Invalid model name: {model_name}. Must choose one of the these models: {list(self.model_names.keys())}")

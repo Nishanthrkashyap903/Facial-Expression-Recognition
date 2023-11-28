@@ -5,7 +5,6 @@ then decrease the learning rate by a given 'factor'.
 """
 
 from torch.optim import lr_scheduler
-import cv2 as cv
 
 class LRScheduler: 
     
