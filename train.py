@@ -3,6 +3,7 @@ from torchvision.transforms import RandomCrop
 from torchvision.transforms import Grayscale
 from torchvision.transforms import ToTensor
 from torch.utils.data import random_split
+from sklearn.metrics import classification_report
 from torch.utils.data import DataLoader
 import configuration as cfg
 from early_stopping import EarlyStopping
@@ -57,7 +58,7 @@ def loadData(train_transform, test_transform):
     val_dataloader = DataLoader(val_data, batch_size=cfg.BATCH_SIZE)
     test_dataloader = DataLoader(test_data, batch_size=cfg.BATCH_SIZE)
 
-    return train_dataloader, val_dataloader, test_dataloader, classes
+    return train_dataloader, val_dataloader, test_dataloader, classes, test_data
 
 # Plot the training history. 
 def plotHistory(history, save_plot): 
@@ -85,7 +86,7 @@ def train(args):
     train_transform, test_transform = createTransforms()
     
     # Load the data from the directories
-    train_dataloader, val_dataloader, test_dataloader, classes = loadData(train_transform, test_transform)
+    train_dataloader, val_dataloader, test_dataloader, classes, test_data = loadData(train_transform, test_transform)
 
     # Number of classes
     num_classes = len(classes)
@@ -214,7 +215,29 @@ def train(args):
     # Plotting the history
     plotHistory(history, f"acc_and_loss_{args.model}.png")
 
-    # TODO: Run the trained model on the test data set. 
+    ################## TEST TRAINED MODEL ##################### 
+    # Mode the model to the device.
+    model = model.to(device)
+    with torch.set_grad_enabled(False):
+        # Evaluation mode.
+        model.eval()
+    
+        # Keep track of our predictions
+        predictions = []
+    
+        for (data, _) in test_dataloader:
+            # Move the data into the device used for testing
+            data = data.to(device)
+    
+            # Perform a forward pass and calculate the training loss
+            output = model(data)
+            output = output.argmax(axis=1).cpu().numpy()
+            predictions.extend(output)
+ 
+    # evaluate the network
+    print("[INFO] Evaluating trained model...")
+    actual = [label for _, label in test_data]
+    print(classification_report(actual, predictions, target_names=test_data.classes))
 
     
 
