@@ -39,7 +39,7 @@ pip3 install -r requirements.txt
 * Step 1: Choose the device to run the model
     * Type ```nvidia-smi``` to see all available GPUs in the CS machine. 
     * Choose the one that is not being used by other processes. 
-* Step 2: Run the following command to train the model 
+* Step 2: Run the following command to train the model. Notice we only support one of these four models: VGG11, VGG13, VGG16 and VGG19. 
 ```
 CUDA_VISIBLE_DEVICES = <gpu_number> python3 train.py --model <model_name> --num-epochs <number of epochs>
 ```
