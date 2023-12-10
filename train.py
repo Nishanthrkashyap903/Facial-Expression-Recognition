@@ -19,6 +19,9 @@ import argparse
 import torch
 import math
 
+"""
+- Create a list of all transforms. 
+"""
 def createTransforms(): 
     # Create a list of transformations to apply on each image during
     # training/validation and testing
@@ -37,6 +40,9 @@ def createTransforms():
 
     return train_transform, test_transform
 
+"""
+- Load the training and testing datasets. 
+"""
 def loadData(train_transform, test_transform):
     # Load the datasets and apply data augmentation.
     train_data = datasets.ImageFolder(cfg.TRAIN_DIR, transform=train_transform)
@@ -60,7 +66,9 @@ def loadData(train_transform, test_transform):
 
     return train_dataloader, val_dataloader, test_dataloader, classes, test_data
 
-# Plot the training history. 
+"""
+- Plot the training history. 
+"""
 def plotHistory(history, save_plot): 
     # Set the style for the plot
     plt.style.use("seaborn-v0_8-poster")
@@ -77,6 +85,9 @@ def plotHistory(history, save_plot):
     plt.legend(loc = "upper right")
     plt.savefig(save_plot)
 
+"""
+- Train, validate and test the model. 
+"""
 def train(args):
     # Use CUDA is available. 
     device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -238,15 +249,13 @@ def train(args):
     actual = [label for _, label in test_data]
     print(classification_report(actual, predictions, target_names=test_data.classes))
 
-    
 
 def main(): 
-    # initialize the argument parser and establish the arguments required
+    # Initialize the argument parser and establish the arguments required
     parser = argparse.ArgumentParser()
     parser.add_argument('-m', '--model', default="VGG11", type=str, help="Specify the model name. Choose from this list: [VGG11, VGG13, VGG16, VGG19]")
-    parser.add_argument('-e', '--num-epochs', default=25, type=int, help="The number of epochs needed to train the model")
+    parser.add_argument('-e', '--num-epochs', default=40, type=int, help="The number of epochs needed to train the model")
     args = parser.parse_args()
-    # print(args)
     train(args)
 
 if __name__=="__main__": 

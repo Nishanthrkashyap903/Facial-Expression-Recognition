@@ -1,6 +1,10 @@
 import torch.nn as nn
 
+"""
+- Implement the CNN by following the VGG models. 
+"""
 class EmotionVGG(nn.Module):
+    # Declare all models' layers
     model_names = {
         'VGG11': [64, 'M', 128, 'M', 256, 256, 'M', 512, 512, 'M', 512, 512, 'M'],
         'VGG13': [64, 64, 'M', 128, 128, 'M', 256, 256, 'M', 512, 512, 'M', 512, 512, 'M'],
@@ -8,7 +12,7 @@ class EmotionVGG(nn.Module):
         'VGG19': [64, 64, 'M', 128, 128, 'M', 256, 256, 256, 256, 'M', 512, 512, 512, 512, 'M', 512, 512, 512, 512, 'M'],
     }
 
-    def __init__(self, in_channels = 1, num_classes = 7, model_name = "VGG13"):
+    def __init__(self, in_channels = 1, num_classes = 7, model_name = "VGG11"):
         super(EmotionVGG, self).__init__()
         if model_name not in self.model_names: 
             raise ValueError(f"Invalid model name: {model_name}. Must choose one of the these models: {list(self.model_names.keys())}")
@@ -22,7 +26,7 @@ class EmotionVGG(nn.Module):
         # Create the fully-connected layers 
         # Flatten -> 128 x 128 x 7 Linear layers. 
         self.fully_connected_layers = nn.Sequential(
-            nn.Linear(512 * 1 * 1, 128), # TODO: Try different values and see what work, make sure it is >= num_classes. 
+            nn.Linear(512 * 1 * 1, 128), # Try different values and see what work, make sure it is >= num_classes. 
             nn.ReLU(), 
             nn.Dropout(p=0.5), # This layer is not in the orginal paper. 
             nn.Linear(128, 128), 
