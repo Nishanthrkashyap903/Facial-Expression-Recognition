@@ -93,12 +93,11 @@ def train(args):
     print(f"[INFO] Class labels: {classes}")
 
     # Initialize the model and send it to device
-    # TODO: Pass the model name from the main function. 
     model = EmotionVGG(in_channels=1, num_classes=num_classes, model_name=args.model)
     model = model.to(device)
     
     # Initialize our optimizer and loss function
-    optimizer = SGD(params=model.parameters(), lr=cfg.LEARING_RATE)
+    optimizer = SGD(params=model.parameters(), lr=cfg.LEARING_RATE, weight_decay=0.0001)
     loss_func = nn.CrossEntropyLoss()
     
     # Initialize the learning rate scheduler and early stopping mechanism
